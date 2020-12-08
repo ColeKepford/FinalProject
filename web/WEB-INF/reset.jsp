@@ -13,11 +13,11 @@
     </head>
      <h1>Reset Password</h1>
         <p>Enter your email address to reset your password</p>
-        <form method="post" action="reset">
+        <form method="post" action="Reset">
             Email Address <input type="text" name="resetEmail" value="${resetEmail}">
             <br>
             <input type="submit" value="submit">
         </form>
-            <a href="login">Login</a>
+            <a href="Login">Login</a>
     </body>
 </html>

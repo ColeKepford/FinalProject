@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Enter new Password</h1>
-        <form method="post" action="reset">
+        <form method="post" action="Reset">
             <input type="text" name="newPassword">
             <input type="submit" value="Submit">
             <input type="hidden" name="uuid" value="${uuid}">
