@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName")
     , @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
-    , @NamedQuery(name = "User.findByResetPasswordUuid", query = "SELECT u FROM User u WHERE u.resetPasswordUuid = :resetPasswordUuid")})
+    , @NamedQuery(name = "User.findByResetPasswordUuid", query = "SELECT u FROM User u WHERE u.resetPasswordUuid = :resetPasswordUuid")
+    , @NamedQuery(name = "User.findByAccountActivationUuid", query = "SELECT u FROM User u WHERE u.accountActivationUuid = :accountActivationUuid")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,6 +60,8 @@ public class User implements Serializable {
     private String password;
     @Column(name = "reset_password_uuid")
     private String resetPasswordUuid;
+    @Column(name = "account_activation_uuid")
+    private String accountActivationUuid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
     private List<Item> itemList;
     @JoinColumn(name = "company", referencedColumnName = "company_id")
@@ -132,6 +135,12 @@ public class User implements Serializable {
     {
         this.resetPasswordUuid = resetPasswordUuid;
     }
+    
+    public void setAccountActivationUuid(String accountActivationUuid)
+    {
+        this.accountActivationUuid = accountActivationUuid;
+    }
+    
     @XmlTransient
     public List<Item> getItemList() {
         return itemList;

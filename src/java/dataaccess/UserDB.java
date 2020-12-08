@@ -50,7 +50,7 @@ public class UserDB
         }
     }
     
-    public User getByUUID(String uuid) 
+    public User getByResetPasswordUUID(String uuid) 
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
@@ -64,7 +64,7 @@ public class UserDB
         }
     }
     
-    public void setUserUUID(User user, String UUID)
+    public void setResetPasswordUUID(User user, String UUID)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
@@ -72,6 +72,38 @@ public class UserDB
         try 
         {
             user.setResetPasswordUuid(UUID);
+            trans.begin();
+            em.merge(user);
+            trans.commit();
+        } 
+        catch(Exception e)
+        {
+            trans.rollback();
+        }
+    }
+    
+    public User getActivationUUID(String uuid) 
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        try 
+        {
+            return em.createNamedQuery("User.findByAccountActivationUuid", User.class).setParameter("accountActivationUuid", uuid).getResultList().get(0);
+        } 
+        catch (Exception e) 
+        {
+            return null;
+        }
+    }
+    
+    public void setActivationUUID(User user, String UUID)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try 
+        {
+            user.setAccountActivationUuid(UUID);
             trans.begin();
             em.merge(user);
             trans.commit();

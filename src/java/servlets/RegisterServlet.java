@@ -31,17 +31,30 @@ public class RegisterServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        try 
+        String uuid = request.getParameter("uuid");
+        if(uuid == null)
         {
-            InventoryService is = new InventoryService();
-            List<Company> companies = is.getallCompanies();
-            request.setAttribute("companies", companies); 
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+            try 
+            {
+                InventoryService is = new InventoryService();
+                List<Company> companies = is.getallCompanies();
+                request.setAttribute("companies", companies); 
+            } 
+            catch (Exception ex) 
+            {
+                Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
         }
-        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+        else
+        {
+            AccountService as = new AccountService();
+            boolean activationStatus = as.activateUser(uuid);
+            
+            String activationMessage = activationStatus ? "Succesfully activated account" : "Account not activated";
+            request.setAttribute("message", activationMessage);
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response); 
+        }
     }
 
    
@@ -95,14 +108,13 @@ public class RegisterServlet extends HttpServlet
                 else
                 {
                     Role role = as.getRole(2);
-                    as.insert(email, true, firstName, lastName, password2, company, role);
-                
+                    as.insert(email, false, firstName, lastName, password2, company, role);
+                    
+                    String url = request.getRequestURL().toString();
                     String path = getServletContext().getRealPath("/WEB-INF");
-                    user = as.login(email, password1, path);
-                    session.setAttribute("user", user);
-                    session.setAttribute("email", email);
-
-                    response.sendRedirect("Inventory");
+                    
+                    as.accountActivation(email, path, url);
+                    request.setAttribute("message", "Activation email sent");
                 } 
             } 
             catch (Exception ex) 

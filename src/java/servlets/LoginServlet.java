@@ -67,8 +67,7 @@ public class LoginServlet extends HttpServlet
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }
-        String path = getServletContext().getRealPath("/WEB-INF");
-        User user = as.login(email, password, path);
+        User user = as.login(email, password);
         
         if(user == null)
         {

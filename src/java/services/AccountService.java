@@ -24,7 +24,7 @@ import models.User;
  */
 public class AccountService 
 {
-     public User login(String email, String password, String path) 
+     public User login(String email, String password) 
      {
         UserDB userDB = new UserDB();
         
@@ -73,9 +73,48 @@ public class AccountService
     public boolean changePassword(String uuid, String password) {
         UserDB userDB = new UserDB();
         try {
-            User user = userDB.getByUUID(uuid);
+            User user = userDB.getByResetPasswordUUID(uuid);
             user.setPassword(password);
             user.setResetPasswordUuid(null);
+            userDB.update(user);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    
+    public boolean accountActivation(String email, String path, String url){
+        String uuid = UUID.randomUUID().toString();
+        String link = url + "?uuid=" + uuid;
+        UserDB userDB = new UserDB();
+        
+        try{
+            User user = userDB.get(email);
+            user.setAccountActivationUuid(uuid);
+            userDB.update(user);
+            
+            String to = email;
+            String subject = "Account activation " + user.getEmail();
+            String template = path + "/emailtemplates/accountactivation.html";
+            
+            HashMap<String, String> tags = new HashMap<>();
+            tags.put("firstname", user.getFirstName());
+            tags.put("lastname", user.getLastName());
+            tags.put("link", link);
+            
+            GmailService.sendMail(to, subject, template, tags);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+    
+    public boolean activateUser(String uuid) {
+        UserDB userDB = new UserDB();
+        try {
+            User user = userDB.getActivationUUID(uuid);
+            user.setActive(true);
+            user.setAccountActivationUuid(null);
             userDB.update(user);
             return true;
         } catch (Exception ex) {
