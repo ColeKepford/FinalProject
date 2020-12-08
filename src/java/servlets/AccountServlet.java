@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import models.Role;
 import models.User;
 import services.AccountService;
+import utilities.CookieUtil;
 
 /**
  *
@@ -39,7 +41,7 @@ public class AccountServlet extends HttpServlet
             request.setAttribute("message", "User logged out.");
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
-        
+     
         if (request.getParameter("action") != null && request.getParameter("action").equals("deactivate"))
         {
             try 
@@ -86,6 +88,7 @@ public class AccountServlet extends HttpServlet
         String password1 = request.getParameter("password1");
         String password2 = request.getParameter("password2");
         
+        
         if(firstName.length() > 0 && lastName.length() > 0 
                 && password1.length() > 0 && password2.length() > 0&& password1.equals(password2))
         {
@@ -106,12 +109,6 @@ public class AccountServlet extends HttpServlet
         }
         else
         {
-            request.setAttribute("email", email);
-            request.setAttribute("firstName", firstName);
-            request.setAttribute("lastName", lastName);
-            request.setAttribute("password1", password1);
-            request.setAttribute("password2", password2);
-            
             request.setAttribute("message", "Please fill in all fields and have matching passwords");
             getServletContext().getRequestDispatcher("/WEB-INF/account.jsp").forward(request, response);
             return;

@@ -54,8 +54,8 @@
                         <option value="${category.categoryId}">${category.categoryName}</option>
                     </c:forEach>
                 </select><br>
-                Name: <input type="text" name="itemName"><br>
-                Price: <input type="number" name="price"><br>
+                Name: <input type="text" name="itemName" value="${itemNameField}"><br>
+                Price: <input type="number" name="price" value="${priceField}"><br>
                 <input type="hidden" name="action" value="add">
                 <input class="add" type="submit" value="Add">
             </form>

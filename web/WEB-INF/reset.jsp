@@ -18,6 +18,7 @@
             <br>
             <input type="submit" value="submit">
         </form>
-            <a href="Login">Login</a>
+            <a href="Login">Login</a><br>
+            ${message}
     </body>
 </html>

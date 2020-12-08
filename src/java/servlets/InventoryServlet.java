@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import models.Item;
 import models.User;
 import services.AccountService;
 import services.InventoryService;
+import utilities.CookieUtil;
 
 /**
  *
@@ -42,7 +44,11 @@ public class InventoryServlet extends HttpServlet
         InventoryService is = new InventoryService();
         AccountService as = new AccountService();
         
-        
+        Cookie[] cookies = request.getCookies();
+        String itemName = CookieUtil.getCookieValue(cookies, "itemName");
+        request.setAttribute("itemNameField", itemName);
+        String price = CookieUtil.getCookieValue(cookies, "price");
+        request.setAttribute("priceField", price);
         
         String action = request.getParameter("action");
         
@@ -151,8 +157,13 @@ public class InventoryServlet extends HttpServlet
                     }
                     else
                     {
-                        request.setAttribute("itemName", itemName);
-                        request.setAttribute("price", price);
+                        Cookie itemNameCookie = new Cookie("itemName", itemName);
+                        itemNameCookie.setMaxAge(60 * 5);
+                        response.addCookie(itemNameCookie);
+                        Cookie priceCookie = new Cookie("price", price);
+                        priceCookie.setMaxAge(60 * 5);
+                        response.addCookie(priceCookie);
+                        
                         request.setAttribute("saveMessage", "Fill in all fields.");
                     }
                 } 
@@ -184,6 +195,10 @@ public class InventoryServlet extends HttpServlet
                         Logger.getLogger(InventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                else
+                    {
+                        request.setAttribute("saveMessage", "Fill in all fields.");
+                    }
                 break;
         }
         try

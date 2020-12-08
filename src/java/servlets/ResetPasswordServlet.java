@@ -44,6 +44,7 @@ public class ResetPasswordServlet extends HttpServlet
             String email = request.getParameter("resetEmail");
         
             as.resetPassword(email, path, url);
+            request.setAttribute("message", "Reset email sent");
             getServletContext().getRequestDispatcher("/WEB-INF/reset.jsp").forward(request, response);   
         } 
         else 
