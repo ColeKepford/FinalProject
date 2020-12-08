@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.User;
 import services.AccountService;
+import utilities.CookieUtil;
 
 /**
  *
@@ -35,7 +36,9 @@ public class LoginServlet extends HttpServlet
             session = request.getSession();
             request.setAttribute("message", "User logged out.");
         }
-        
+        Cookie[] cookies = request.getCookies();
+        String email = CookieUtil.getCookieValue(cookies, "email");
+        request.setAttribute("email", email);
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);  
     }
 

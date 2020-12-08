@@ -33,16 +33,6 @@ public class AccountService
             User user = userDB.get(email);
             if (password.equals(user.getPassword()) && user.getActive() == true) 
             {
-                String to = user.getEmail();
-                String subject = "Final Project Login";
-                String template = path + "/emailtemplates/login.html";
-                
-                HashMap<String, String> tags = new HashMap();
-                tags.put("firstname", user.getFirstName());
-                tags.put("lastname", user.getLastName());
-                tags.put("date", (new java.util.Date()).toString());
-                
-                GmailService.sendMail(to, subject, template, tags);
                 return user;
             }
         } 
