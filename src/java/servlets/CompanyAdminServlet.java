@@ -191,7 +191,11 @@ public class CompanyAdminServlet extends HttpServlet
                 
             try 
             {
-                if(email.length() > 0 && fName.length() > 0 && lName.length() > 0 && password.length() > 0 &&
+                if(as.getUser(email) != null)
+                {
+                    request.setAttribute("message", "Account already exists with that email");
+                }
+                else if(email.length() > 0 && fName.length() > 0 && lName.length() > 0 && password.length() > 0 &&
                         roleString.length() > 0)
                 {
                     Company company = user.getCompany();

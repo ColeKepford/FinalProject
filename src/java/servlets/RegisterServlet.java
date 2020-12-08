@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,7 +115,10 @@ public class RegisterServlet extends HttpServlet
                     String path = getServletContext().getRealPath("/WEB-INF");
                     
                     as.accountActivation(email, path, url);
-                    request.setAttribute("message", "Activation email sent");
+                    
+                    request.setAttribute("message", "Activation email sent. Click link to login to account");
+
+                    getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
                 } 
             } 
             catch (Exception ex) 

@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet
             throws ServletException, IOException 
     {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        
         if (request.getParameter("action") != null && request.getParameter("action").equals("logout")) 
         {
             session.invalidate();
