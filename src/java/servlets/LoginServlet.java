@@ -9,6 +9,7 @@ import com.sun.istack.internal.logging.Logger;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,11 @@ public class LoginServlet extends HttpServlet
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
+        //Save email to cookie
+        Cookie cookie = new Cookie("email", email);
+        cookie.setMaxAge(60 * 60 * 24 * 365 * 3);
+        response.addCookie(cookie);
+        
         request.setAttribute("email", email);
        
         
@@ -58,8 +64,8 @@ public class LoginServlet extends HttpServlet
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }
-       
-        User user = as.login(email, password);
+        String path = getServletContext().getRealPath("/WEB-INF");
+        User user = as.login(email, password, path);
         
         if(user == null)
         {

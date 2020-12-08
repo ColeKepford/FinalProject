@@ -97,7 +97,8 @@ public class RegisterServlet extends HttpServlet
                     Role role = as.getRole(2);
                     as.insert(email, true, firstName, lastName, password2, company, role);
                 
-                    user = as.login(email, password1);
+                    String path = getServletContext().getRealPath("/WEB-INF");
+                    user = as.login(email, password1, path);
                     session.setAttribute("user", user);
                     session.setAttribute("email", email);
 
