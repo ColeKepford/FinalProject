@@ -80,6 +80,10 @@
         <servlet-name>PageNotFoundOrErrorServlet</servlet-name>
         <servlet-class>servlets.PageNotFoundOrErrorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>servlets.ResetPasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/Admin</url-pattern>
@@ -107,6 +111,10 @@
     <servlet-mapping>
         <servlet-name>PageNotFoundOrErrorServlet</servlet-name>
         <url-pattern>/PageNotFoundOrError</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/Reset</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
