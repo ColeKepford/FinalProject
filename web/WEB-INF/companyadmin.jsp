@@ -63,6 +63,31 @@
                 </tr>
             </c:forEach>
         </table>
+         
+         <h3>Search for Item</h3>
+        <form action="CompanyAdmin" method="post">
+            Item: <input type="text" name="itemSearch"><br>
+             <input type="hidden" name="action" value="search">
+            <input class="search" type="submit" value="Search">
+        </form>
+        
+        <c:if test="${foundItems != null}">
+            <h3>Found items</h3>
+            <table border = "1" width = "35%">
+            <tr>
+                <th>Item</th>
+                <th>Owner</th>
+                <th>Company</th>
+            </tr>
+            <c:forEach items="${foundItems}" var="item">
+                <tr>
+                    <td>${item.itemName}</td>
+                    <td>${item.owner.firstName} ${item.owner.lastName}</td>
+                    <td>${item.owner.company.companyName}</td>
+                </tr>
+            </c:forEach>
+            </table>
+        </c:if>
                         
         <c:if test="${editUser == null}">
         <h3>Add User</h3>

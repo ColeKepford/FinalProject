@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.Category;
 import models.Company;
+import models.Item;
 import models.Role;
 import models.User;
 import services.AccountService;
@@ -182,6 +183,37 @@ public class CompanyAdminServlet extends HttpServlet
         
         switch(action)
         {
+            case "search":
+                String searchedItem = request.getParameter("itemSearch");
+                try
+                {
+                    List<User> users = as.getAllUsers();
+                    List<Item> items = new ArrayList<Item>();
+                    List<Item> usersItems;
+                    for(User x: users)
+                    {
+                        usersItems = x.getItemList();
+                        for(Item item: usersItems)
+                        {
+                            items.add(item);
+                        }
+                    }
+                    List<Item> foundItems = new ArrayList<Item>();
+                    for(Item item: items)
+                    {
+                        if(item.getItemName().contains(searchedItem) && item.getOwner().getCompany().equals(user.getCompany()))
+                        {
+                            foundItems.add(item);
+                        }
+                    }
+                    request.setAttribute("foundItems", foundItems);
+                }
+                catch(Exception ex)
+                {
+                    Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+                
             case "add":
                 String email = request.getParameter("emailField");
                 String fName = request.getParameter("fName");
