@@ -124,4 +124,14 @@
     <welcome-file-list>
         <welcome-file>Login</welcome-file>
     </welcome-file-list>
+    <env-entry>
+        <env-entry-name>webmail-username</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>cprg352finalproject@gmail.com</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>webmail_password</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>Redman123</env-entry-value>
+    </env-entry>
 </web-app>
