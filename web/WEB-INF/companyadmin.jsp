@@ -73,17 +73,15 @@
         
         <c:if test="${foundItems != null}">
             <h3>Found items</h3>
-            <table border = "1" width = "35%">
+            <table border = "1" width = "25%">
             <tr>
                 <th>Item</th>
                 <th>Owner</th>
-                <th>Company</th>
             </tr>
             <c:forEach items="${foundItems}" var="item">
                 <tr>
                     <td>${item.itemName}</td>
                     <td>${item.owner.firstName} ${item.owner.lastName}</td>
-                    <td>${item.owner.company.companyName}</td>
                 </tr>
             </c:forEach>
             </table>

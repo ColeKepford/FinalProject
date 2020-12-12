@@ -84,7 +84,7 @@ INSERT INTO `category` (`category_name`) VALUES ('kitchen');
 INSERT INTO `category` (`category_name`) VALUES ('bathroom');
 INSERT INTO `category` (`category_name`) VALUES ('living room');
 INSERT INTO `category` (`category_name`) VALUES ('basement');
-INSERT INTO `category` (`category_name`) VALUES ('bedrooom');
+INSERT INTO `category` (`category_name`) VALUES ('bedroom');
 INSERT INTO `category` (`category_name`) VALUES ('garage');
 INSERT INTO `category` (`category_name`) VALUES ('office');
 INSERT INTO `category` (`category_name`) VALUES ('utility room');
